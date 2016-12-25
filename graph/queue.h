@@ -1,7 +1,7 @@
 /**
  * Copyright © 2016 Ashutosh Grewal. All rights reserved.
  *
- * @filequeue.h
+ * @file queue.h
  * @author Ashutosh Grewal 
  * @date 12/24/16.
  *

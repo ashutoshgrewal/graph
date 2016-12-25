@@ -13,11 +13,11 @@
 #ifndef PUBLIC_H
 #define PUBLIC_H
 
+typedef struct node_s node_t;
+
 typedef enum bool {
     FALSE,
     TRUE
 } boolean;
-
-typedef struct node_s node_t;
 
 #endif /* PUBLIC_H */

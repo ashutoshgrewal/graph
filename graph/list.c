@@ -35,7 +35,6 @@ boolean add_to_list (node_t **head, void *data) {
         
         return FALSE;
     }
-    
     node->data = data;
     node->next = *head;
     *head = node;

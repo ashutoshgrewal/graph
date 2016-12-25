@@ -14,7 +14,6 @@
 #define GRAPH_H
 
 typedef struct vertex_s vertex_t;
-
 typedef void (*print_data_t) (void *);
 typedef boolean (*data_is_equal_t) (void *, void *);
 

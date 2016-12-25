@@ -1,6 +1,6 @@
 /**
  * Copyright © 2016 Ashutosh Grewal. All rights reserved.
- * @file  main.c
+ * @file main.c
  *
  * @date 12/23/2016
  * @author Ashutosh Grewal

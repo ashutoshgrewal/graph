@@ -312,7 +312,7 @@ vertex_t *breadth_first_search (graph_t *graph, void *data)
         }
         vertex = pop_from_queue(queue);
     }
-    
     destroy_queue(queue);
+    
     return vertex;
 }

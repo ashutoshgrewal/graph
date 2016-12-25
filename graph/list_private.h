@@ -13,9 +13,12 @@
 #ifndef LIST_PRIVATE_H
 #define LIST_PRIVATE_H
 
+/**
+ * @brief A node that makes up a linked list (or a queue/stack).
+ */
 struct node_s {
-    struct node_s *next;
-    void *data;
+    struct node_s *next; /**< Pointer to the next node. */
+    void *data; /**< The user created opaque data stored. */
 };
 
 #endif /* LIST_PRIVATE_H */

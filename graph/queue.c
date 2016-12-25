@@ -75,8 +75,6 @@ boolean push_to_queue (queue_t *queue, void *data)
     return TRUE;
 }
 
-
-
 /**
  * @brief Pop an element from the front of the queue.
  *
@@ -106,7 +104,6 @@ void *pop_from_queue (queue_t *queue)
     
     return data;
 }
-
 
 /**
  * @brief Destroy the queue data structure and freeing the elements.
