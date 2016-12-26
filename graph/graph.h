@@ -29,7 +29,7 @@ typedef struct graph_s {
 } graph_t;
 
 graph_t *create_graph (print_data_t, data_is_equal_t);
-boolean add_to_graph (graph_t *, void *, void *[], unsigned int);
+boolean add_vertex_to_graph (graph_t *, void *, void *[], unsigned int);
 boolean delete_from_graph (graph_t *, void *);
 vertex_t *breadth_first_search (graph_t *, void *);
 vertex_t *depth_first_search (graph_t *, void *);

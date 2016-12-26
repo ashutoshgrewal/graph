@@ -91,7 +91,7 @@ static void make_vertices_adjacent (vertex_t *vertex1, vertex_t *vertex2)
  * @return TRUE if vertex is successfully added, FALSE otherwise.
  */
 boolean add_vertex_to_graph (graph_t *graph, void *data, void **adj_vertex_data,
-                             unsigned num_of_adj_vertices)
+                             unsigned int num_of_adj_vertices)
 {
     vertex_t *vertex = NULL, *lookup_vertex;
     vertex_t **adjacent_vertices = NULL;
@@ -122,9 +122,16 @@ boolean add_vertex_to_graph (graph_t *graph, void *data, void **adj_vertex_data,
         goto fail;
     }
     memset(vertex, 0, sizeof(vertex_t));
+    vertex->data = data;
      
     for (int i = 0; i < num_of_adj_vertices; i++) {
-        make_vertices_adjacent(adj_vertex_data[i], vertex);
+        make_vertices_adjacent(adjacent_vertices[i], vertex);
+    }
+    if (graph->vertex == NULL) {
+        graph->vertex = vertex;
+    }
+    if (adjacent_vertices) {
+        free(adjacent_vertices);
     }
     
     return TRUE;
@@ -238,6 +245,7 @@ void breadth_first_traversal (graph_t *graph)
     /*
      * Unmark all the vertices, to enable next search/traversal.
      */
+    vertex = graph->vertex;
     while (vertex) {
         if (is_visited(vertex)) {
             mark_not_visited(vertex);
@@ -268,7 +276,7 @@ void breadth_first_traversal (graph_t *graph)
  */
 vertex_t *breadth_first_search (graph_t *graph, void *data)
 {
-    vertex_t *vertex, *adj_vertex;
+    vertex_t *vertex, *lookedup_vertex, *adj_vertex;
     queue_t *queue;
     
     vertex = graph->vertex;
@@ -292,9 +300,11 @@ vertex_t *breadth_first_search (graph_t *graph, void *data)
         vertex = pop_from_queue(queue);
     }
     
+    lookedup_vertex = vertex;
     /*
      * Unmark all the vertices that we marked to enable next search/traversal.
      */
+    vertex = graph->vertex;
     while (vertex) {
         if (is_visited(vertex)) {
             mark_not_visited(vertex);
@@ -314,5 +324,5 @@ vertex_t *breadth_first_search (graph_t *graph, void *data)
     }
     destroy_queue(queue);
     
-    return vertex;
+    return lookedup_vertex;
 }

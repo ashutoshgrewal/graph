@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "public.h"
 #include "graph.h"
 
@@ -57,7 +58,27 @@ boolean string_is_same (void *data1, void *data2)
 
 int main(int argc, const char * argv[]) {
     graph_t *graph;
+    int adjacent_cities;
     
     graph = create_graph (print_string, string_is_same);
+    
+    char cities[][15] = {"Palo Alto", "Mountain View", "Sunnyvale", "San Jose"};
+    
+    adjacent_cities = 0;
+    add_vertex_to_graph(graph, cities[0], NULL, adjacent_cities);
+    breadth_first_traversal(graph);
+    printf("\n");
+    
+    void **opaque_data;
+    
+    
+    adjacent_cities = 1;
+    opaque_data = (void **)malloc (sizeof(void *) * adjacent_cities);
+    opaque_data[0] = cities[0];
+    add_vertex_to_graph(graph, cities[1], opaque_data, adjacent_cities);
+    breadth_first_traversal(graph);
+    printf("\n");
+
+    
     return 0;
 }

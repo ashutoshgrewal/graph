@@ -55,7 +55,7 @@ void *get_next_elements_data (void *data)
     
     node = data - offsetof(node_t, data);
     if (node) {
-        return (node->next->data);
+        return get_data_from_node(node->next);
     } else {
         return NULL;
     }
