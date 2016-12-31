@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		250B25C91E16EFCC00FE7792 /* stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 250B25C71E16EFCC00FE7792 /* stack.c */; };
 		252164D01E0DFEDD005ED0D5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 252164CF1E0DFEDD005ED0D5 /* main.c */; };
 		252164D81E0E047A005ED0D5 /* graph.c in Sources */ = {isa = PBXBuildFile; fileRef = 252164D71E0E0479005ED0D5 /* graph.c */; };
 		252955AA1E0F0BDD004FD10A /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 252955A81E0F0BDD004FD10A /* queue.c */; };
@@ -26,6 +27,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		250B25C71E16EFCC00FE7792 /* stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stack.c; sourceTree = "<group>"; };
+		250B25C81E16EFCC00FE7792 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
 		252164CC1E0DFEDD005ED0D5 /* graph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = graph; sourceTree = BUILT_PRODUCTS_DIR; };
 		252164CF1E0DFEDD005ED0D5 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		252164D61E0DFFCD005ED0D5 /* graph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 				257B155A1E0E593A00BB9868 /* public.h */,
 				252955A81E0F0BDD004FD10A /* queue.c */,
 				252955A91E0F0BDD004FD10A /* queue.h */,
+				250B25C71E16EFCC00FE7792 /* stack.c */,
+				250B25C81E16EFCC00FE7792 /* stack.h */,
 			);
 			path = graph;
 			sourceTree = "<group>";
@@ -138,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				250B25C91E16EFCC00FE7792 /* stack.c in Sources */,
 				257B15591E0E4CB300BB9868 /* list.c in Sources */,
 				252955AA1E0F0BDD004FD10A /* queue.c in Sources */,
 				252164D81E0E047A005ED0D5 /* graph.c in Sources */,

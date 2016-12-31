@@ -10,8 +10,10 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include "public.h"
+
 boolean add_to_list (node_t **, void *);
-void *get_next_elements_data (void *);
+node_t *get_next_node (node_t *);
 void *get_data_from_node (node_t *);
 
 #endif /* LIST_H */

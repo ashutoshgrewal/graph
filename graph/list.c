@@ -43,19 +43,16 @@ boolean add_to_list (node_t **head, void *data) {
 }
 
 /**
- * @brief Return the opaque data of next element stored in the list.
+ * @brief Return the next element stored in the list.
  *
- * @param[in] data The current node's data.
+ * @param[in] node A node in the list.
  *
- * @return The next element's data or NULL if the list has reached the end.
+ * @return The next element or NULL if the list has reached the end.
  */
-void *get_next_elements_data (void *data)
+node_t *get_next_node (node_t *node)
 {
-    node_t *node;
-    
-    node = data - offsetof(node_t, data);
     if (node) {
-        return get_data_from_node(node->next);
+        return node->next;
     } else {
         return NULL;
     }

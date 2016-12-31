@@ -8,11 +8,14 @@
  * @brief This file implements the queue data structure.
  *
  * @details
- * A queue data structure is a type oflinked list where all new elements are
+ * A queue data structure is a type of linked list where all new elements are
  * pushed to the back while all deletions happen at the front. This is like a
  * queue of people waiting in line to get into a bus.
  * This is implemented as a structure of nodes where we track the first and
  * last element and each node is linked to the next via pointer.
+ *
+ * @bug Some of these functions don't check if the passed in queue pointer is
+ *      NULL.
  */
 #include <string.h>
 #include <stdlib.h>
@@ -41,7 +44,7 @@ queue_t *create_queue (void)
     
     queue = (queue_t *) malloc (sizeof(queue_t));
     if (queue != NULL) {
-        queue->first = queue->last = NULL;
+         memset(queue, 0, sizeof(queue_t));
     }
     
     return queue;
@@ -65,6 +68,7 @@ boolean push_to_queue (queue_t *queue, void *data)
         return FALSE;
     }
     node->data = data;
+    node->next = NULL;
     if (queue->first == NULL) {
         queue->first = queue->last = node;
     } else {

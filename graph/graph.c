@@ -27,6 +27,7 @@
 #include "graph.h"
 #include "list.h"
 #include "queue.h"
+#include "stack.h"
 
 /**
  * @brief The data structure that represents the vertex in the graph.
@@ -117,7 +118,7 @@ boolean add_vertex_to_graph (graph_t *graph, void *data, void **adj_vertex_data,
         adjacent_vertices[i] = lookup_vertex;
     }
     
-    vertex = (vertex_t *) malloc (sizeof(vertex_t *));
+    vertex = (vertex_t *) malloc (sizeof(vertex_t));
     if (vertex == NULL) {
         goto fail;
     }
@@ -145,22 +146,6 @@ fail:
     }
     
     return FALSE;
-}
-
-/**
- * @brief Get the next adjacent vertex.
- * 
- * @param[in] vertex The current vertex.
- * 
- * @return The next adjacent vertex or NULL if we reached the end of the list.
- */
-vertex_t *get_next_adjacent_vertex (vertex_t *vertex)
-{
-    vertex_t *next_vertex;
-    
-    next_vertex = get_next_elements_data(vertex);
-    
-    return next_vertex;
 }
 
 /**
@@ -210,7 +195,7 @@ static void mark_not_visited (vertex_t *vertex)
  * We traverse the graph starting from a node. This kind of traversal mandates
  * that we visit all non visisted adjacent vertices of a node before visiting
  * any adjacent vertices of the adjacent vertices. We do so by pushing not yet
- * visisted adjacent vertices of the node to a queue. We pop an element from the
+ * visited adjacent vertices of the node to a queue. We pop an element from the
  * queue and repeat this process.
  *
  * @param[in] graph Pointer to the graph data structure.
@@ -219,6 +204,7 @@ void breadth_first_traversal (graph_t *graph)
 {
     vertex_t *vertex, *adj_vertex;
     queue_t *queue;
+    node_t *node;
     
     vertex = graph->vertex;
     queue = create_queue();
@@ -231,12 +217,11 @@ void breadth_first_traversal (graph_t *graph)
             /*
              * Add non visited adjacent vertices of this vertex to the queue.
              */
-            adj_vertex = get_data_from_node(vertex->adjacent_vertex_list);
-            while (adj_vertex) {
+            for (node = vertex->adjacent_vertex_list; node; node = get_next_node(node)) {
+                adj_vertex = get_data_from_node(node);
                 if (!is_visited(adj_vertex)) {
                     push_to_queue(queue, adj_vertex);
                 }
-                adj_vertex = get_next_adjacent_vertex(adj_vertex);
             }
         }
         vertex = pop_from_queue(queue);
@@ -249,12 +234,11 @@ void breadth_first_traversal (graph_t *graph)
     while (vertex) {
         if (is_visited(vertex)) {
             mark_not_visited(vertex);
-            adj_vertex = get_data_from_node(vertex->adjacent_vertex_list);
-            while (adj_vertex) {
+            for (node = vertex->adjacent_vertex_list; node; node = get_next_node(node)) {
+                adj_vertex = get_data_from_node(node);
                 if (is_visited(adj_vertex)) {
                     push_to_queue(queue, adj_vertex);
                 }
-                adj_vertex = get_next_adjacent_vertex(adj_vertex);
             }
         }
         vertex = pop_from_queue(queue);
@@ -278,6 +262,7 @@ vertex_t *breadth_first_search (graph_t *graph, void *data)
 {
     vertex_t *vertex, *lookedup_vertex, *adj_vertex;
     queue_t *queue;
+    node_t *node;
     
     vertex = graph->vertex;
     queue = create_queue();
@@ -289,12 +274,11 @@ vertex_t *breadth_first_search (graph_t *graph, void *data)
                 break;
             }
             
-            adj_vertex = get_data_from_node(vertex->adjacent_vertex_list);
-            while (adj_vertex) {
+            for (node = vertex->adjacent_vertex_list; node; node = get_next_node(node)) {
+                adj_vertex = get_data_from_node(node);
                 if (!is_visited(adj_vertex)) {
                     push_to_queue(queue, adj_vertex);
                 }
-                adj_vertex = get_next_adjacent_vertex(adj_vertex);
             }
         }
         vertex = pop_from_queue(queue);
@@ -312,12 +296,11 @@ vertex_t *breadth_first_search (graph_t *graph, void *data)
                 break;
             }
             
-            adj_vertex = get_data_from_node(vertex->adjacent_vertex_list);
-            while (adj_vertex) {
+            for (node = vertex->adjacent_vertex_list; node; node = get_next_node(node)) {
+                adj_vertex = get_data_from_node(node);
                 if (is_visited(adj_vertex)) {
                     push_to_queue(queue, adj_vertex);
                 }
-                adj_vertex = get_next_adjacent_vertex(adj_vertex);
             }
         }
         vertex = pop_from_queue(queue);
@@ -326,3 +309,126 @@ vertex_t *breadth_first_search (graph_t *graph, void *data)
     
     return lookedup_vertex;
 }
+
+/**
+ * @brief Traverse the graph data structure in a depth first fashion.
+ *
+ * @details
+ * We traverse the graph starting from a node. This kind of traversal mandates
+ * that we visit adjacent vertices of a node's immediate adjacent vertices before
+ * visiting the adjacent vertices of a node. We do so by pushing not yet visited
+ * adjacent vertices of the node to a stack. We pop an element from the
+ * stack and repeat this process.
+ *
+ * @param[in] graph Pointer to the graph data structure.
+ */
+void depth_first_traversal (graph_t *graph)
+{
+    vertex_t *vertex, *adj_vertex;
+    stack_type *stack;
+    node_t *node;
+    
+    vertex = graph->vertex;
+    stack = create_stack();
+    
+    while (vertex) {
+        if (!is_visited(vertex)) {
+            mark_visited(vertex);
+            graph->print_data(vertex->data);
+            
+            /*
+             * Add non visited adjacent vertices of this vertex to the queue.
+             */
+            for (node = vertex->adjacent_vertex_list; node; node = get_next_node(node)) {
+                adj_vertex = get_data_from_node(node);
+                if (!is_visited(adj_vertex)) {
+                    push_to_stack(stack, adj_vertex);
+                }
+            }
+        }
+        vertex = pop_from_stack(stack);
+    }
+    
+    /*
+     * Unmark all the vertices, to enable next search/traversal.
+     */
+    vertex = graph->vertex;
+    while (vertex) {
+        if (is_visited(vertex)) {
+            mark_not_visited(vertex);
+            for (node = vertex->adjacent_vertex_list; node; node = get_next_node(node)) {
+                adj_vertex = get_data_from_node(node);
+                if (is_visited(adj_vertex)) {
+                    push_to_stack(stack, adj_vertex);
+                }
+            }
+        }
+        vertex = pop_from_stack(stack);
+    }
+    destroy_stack(stack);
+}
+
+/**
+ * @brief Find a node with the given data in the graph traversing in a depth
+ *        first fashion.
+ *
+ * @see depth_first_traversal
+ *
+ * @param[in] graph Pointer to the graph data structure.
+ * @param[in] data Opaque data for which we need to search.
+ *
+ * @return Pointer to vertex containing the opaque data in the graph if one exists,
+ *         NULL otherwise.
+ */
+vertex_t *depth_first_search (graph_t *graph, void *data)
+{
+    vertex_t *vertex, *lookedup_vertex, *adj_vertex;
+    stack_type *stack;
+    node_t *node;
+    
+    vertex = graph->vertex;
+    stack = create_stack();
+    
+    while (vertex) {
+        if (!is_visited(vertex)) {
+            mark_visited(vertex);
+            if (graph->data_is_equal(data, vertex->data)) {
+                break;
+            }
+            
+            for (node = vertex->adjacent_vertex_list; node; node = get_next_node(node)) {
+                adj_vertex = get_data_from_node(node);
+                if (!is_visited(adj_vertex)) {
+                    push_to_stack(stack, adj_vertex);
+                }
+            }
+        }
+        vertex = pop_from_stack(stack);
+    }
+    lookedup_vertex = vertex;
+    
+    /*
+     * Unmark all the vertices that we marked to enable next search/traversal.
+     */
+    vertex = graph->vertex;
+    while (vertex) {
+        if (is_visited(vertex)) {
+            mark_not_visited(vertex);
+            if (graph->data_is_equal(data, vertex->data)) {
+                break;
+            }
+            
+            adj_vertex = get_data_from_node(vertex->adjacent_vertex_list);
+            while (adj_vertex) {
+                if (is_visited(adj_vertex)) {
+                    push_to_stack(stack, adj_vertex);
+                }
+            }
+        }
+        vertex = pop_from_stack(stack);
+    }
+    destroy_stack(stack);
+    
+    return lookedup_vertex;
+}
+

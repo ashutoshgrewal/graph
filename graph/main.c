@@ -68,17 +68,30 @@ int main(int argc, const char * argv[]) {
     add_vertex_to_graph(graph, cities[0], NULL, adjacent_cities);
     breadth_first_traversal(graph);
     printf("\n");
+    depth_first_traversal(graph);
+    printf("\n");
     
     void **opaque_data;
-    
-    
+
     adjacent_cities = 1;
     opaque_data = (void **)malloc (sizeof(void *) * adjacent_cities);
     opaque_data[0] = cities[0];
     add_vertex_to_graph(graph, cities[1], opaque_data, adjacent_cities);
     breadth_first_traversal(graph);
     printf("\n");
-
+    depth_first_traversal(graph);
+    printf("\n");
+    free(opaque_data);
     
+    adjacent_cities = 2;
+    opaque_data = (void **)malloc (sizeof(void *) * adjacent_cities);
+    opaque_data[0] = cities[0];
+    opaque_data[1] = cities[1];
+    add_vertex_to_graph(graph, cities[2], opaque_data, adjacent_cities);
+    breadth_first_traversal(graph);
+    printf("\n");
+    depth_first_traversal(graph);
+    printf("\n");
+    free(opaque_data);
     return 0;
 }
