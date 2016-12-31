@@ -1,8 +1,6 @@
 /**
- * Copyright © 2016 Ashutosh Grewal. All rights reserved.
- *
+ * @copyright © 2016 Ashutosh Grewal. All rights reserved.
  * @file graph.c
- *
  * @author Ashutosh Grewal
  * @date 12/23/16
  * 
@@ -38,7 +36,8 @@
 struct vertex_s {
     node_t *adjacent_vertex_list; /**< Head of the list of adjacent vertices.*/
     void *data; /**< The data stored at the vertex.*/
-    boolean visited;
+    boolean visited; /**< Boolean to help identify nodes already visited during
+                          a traversal. */
 };
 
 /**

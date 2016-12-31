@@ -1,6 +1,5 @@
 /**
- * Copyright © 2016 Ashutosh Grewal. All rights reserved.
- *
+ * @copyright © 2016 Ashutosh Grewal. All rights reserved.
  * @file queue.c
  * @author Ashutosh Grewal 
  * @date 12/24/16.
