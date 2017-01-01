@@ -61,7 +61,7 @@ int main(int argc, const char * argv[]) {
     
     graph = create_graph (print_string, string_is_same);
     
-    char cities[][15] = {"Palo Alto", "Mountain View", "Sunnyvale", "San Jose"};
+    char cities[][15] = {"Palo Alto", "Mountain View", "Sunnyvale", "San Jose", "Los Angeles"};
     
     adjacent_cities = 0;
     add_vertex_to_graph(graph, cities[0], NULL, adjacent_cities);
@@ -92,5 +92,53 @@ int main(int argc, const char * argv[]) {
     depth_first_traversal(graph);
     printf("\n");
     free(opaque_data);
+    
+    adjacent_cities = 2;
+    opaque_data = (void **)malloc (sizeof(void *) * adjacent_cities);
+    opaque_data[0] = cities[1];
+    opaque_data[1] = cities[2];
+    add_vertex_to_graph(graph, cities[3], opaque_data, adjacent_cities);
+    breadth_first_traversal(graph);
+    printf("\n");
+    depth_first_traversal(graph);
+    printf("\n");
+    free(opaque_data);
+    
+    adjacent_cities = 1;
+    opaque_data = (void **)malloc (sizeof(void *) * adjacent_cities);
+    opaque_data[0] = cities[3];
+    add_vertex_to_graph(graph, cities[4], opaque_data, adjacent_cities);
+    breadth_first_traversal(graph);
+    printf("\n");
+    depth_first_traversal(graph);
+    printf("\n");
+    free(opaque_data);
+    
+    delete_from_graph(graph, cities[1]);
+    breadth_first_traversal(graph);
+    printf("\n");
+    depth_first_traversal(graph);
+    printf("\n");
+    
+    adjacent_cities = 1;
+    opaque_data = (void **)malloc (sizeof(void *) * adjacent_cities);
+    opaque_data[0] = cities[0];
+    add_vertex_to_graph(graph, cities[1], opaque_data, adjacent_cities);
+    breadth_first_traversal(graph);
+    printf("\n");
+    depth_first_traversal(graph);
+    printf("\n");
+    free(opaque_data);
+    
+    /*
+     * Leak LA
+     *
+    delete_from_graph(graph, cities[3]);
+    breadth_first_traversal(graph);
+    printf("\n");
+    depth_first_traversal(graph);
+    printf("\n");*/
+    
+    destroy_graph(graph);
     return 0;
 }

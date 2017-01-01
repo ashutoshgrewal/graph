@@ -26,7 +26,8 @@
  *
  * @return TRUE if succesful in adding, FALSE otherwise.
  */
-boolean add_to_list (node_t **head, void *data) {
+boolean add_to_list (node_t **head, void *data)
+{
     node_t *node;
     
     node = (node_t *) malloc (sizeof(node_t));
@@ -39,6 +40,41 @@ boolean add_to_list (node_t **head, void *data) {
     *head = node;
     
     return TRUE;
+}
+
+/**
+ * @brief Delete an element from a linked list.
+ *
+ * @param[out] head Pointer to head of the list.
+ * @param[in] data The data of the node we're asked to delete.
+ *
+ * @return TRUE if node was found and deleted, FALSE otherwise.
+ */
+boolean delete_from_list (node_t **head, void *data)
+{
+    node_t *node, *prev;
+    
+    /*
+     * Initialize prev or the compiler warns that we might use it unitialized.
+     */
+    prev = NULL;
+    if (*head != NULL) {
+        for (node = *head; node; node = get_next_node(node)) {
+            if (node->data == data) {
+                if (*head == node) {
+                    *head = node->next;
+                } else {
+                    prev->next = node->next;
+                }
+                free(node);
+                
+                return TRUE;
+            }
+            prev = node;
+        }
+    }
+    
+    return FALSE;
 }
 
 /**

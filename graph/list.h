@@ -12,6 +12,7 @@
 #include "public.h"
 
 boolean add_to_list (node_t **, void *);
+boolean delete_from_list (node_t **, void *);
 node_t *get_next_node (node_t *);
 void *get_data_from_node (node_t *);
 
